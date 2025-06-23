@@ -247,15 +247,12 @@ class Controller():
         return (coordinates[0] > selection_box[0] and coordinates[0] < selection_box[2]
                 and coordinates[1] > selection_box[1] and coordinates[1] < selection_box[3])
 
-    @staticmethod
-    def find_available_name(directory: str, filename: str) -> str:
+    def find_available_name(self, directory: str, filename: str) -> str:
         name, extension = os.path.splitext(filename)
         for num in itertools.count(0):
-            if not os.path.isfile(
-                os.path.join(
-                    directory,
-                    name + "_" + str(num) + extension)):
-                return name + "_" + str(num) + extension
+            cont = name + "_" + str(num) + "." + self.model.args.image_format
+            if not os.path.isfile(os.path.join(directory, cont)):
+                return cont
         raise ValueError("No available name found")
 
     @staticmethod
